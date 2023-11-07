@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.bglogin {
+    background-image: url("../public/heroimage.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    object-fit: cover;
+}
+
+.fg {
+    color: aliceblue;
+    background-color: rgba(0, 0, 0, 0.1);
+    /* Adjust the alpha (0.5) for the desired level of transparency */
+}
+
+.full-viewport {
+    height: 100vh;
+}
+
+.content {
+    /* Add styles to make the content take up full height */
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
