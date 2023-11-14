@@ -9,6 +9,7 @@ const registerRoute = require("./routes/register");
 const summarizeRoute = require("./routes/summarize");
 const itemRouter = require("./routes/item");
 const groupRouter = require("./routes/group");
+const noteRouter = require("./routes/notes");
 
 const app = express();
 
@@ -35,6 +36,8 @@ app.use("/search", searchRoute);
 app.use("/summarize", summarizeRoute);
 app.use("/item", itemRouter);
 app.use("/group", groupRouter);
+app.use("/note", noteRouter);
+
 const PORT = process.env.NODEJS_PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

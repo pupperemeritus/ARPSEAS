@@ -19,13 +19,13 @@ const Item = mongoose.model("Item", {
         type: String,
         required: false,
     },
-    published: String, // Add the published field
-    updated: String, // Add the updated field
+    published: String,
+    updated: String,
     author: {
-        name: String, // Add the name field inside the author object
+        name: String,
     },
-    comment: String, // Add the comment field
-    journal_ref: String, // Add the journal_ref field
+    comment: String,
+    journal_ref: String,
 });
 
 module.exports = Item;
