@@ -40,7 +40,7 @@ def split_string_by_length(string, length):
     return res
 
 
-pipe = pipeline("summarization", model="google/pegasus-arxiv")
+pipe = pipeline("summarization", device=0, model="sshleifer/distilbart-cnn-12-6")
 
 
 class InputText(BaseModel):
