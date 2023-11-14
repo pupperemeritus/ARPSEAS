@@ -14,18 +14,27 @@ const app = express();
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGODB_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+mongoose
+    .connect(process.env.MONGODB_URL, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    })
+    .then(() => {
+        console.log("Connected to MongoDB");
+    })
+    .catch((err) => {
+        console.error(err);
+    });
 
 app.use(express.json());
 app.use(bodyParser.json());
 
-app.use("/login", authRoute());
-app.use("/register", registerRoute());
-app.use("/search", searchRoute());
-app.use("/summarize");
+app.use("/login", authRoute);
+app.use("/register", registerRoute);
+app.use("/search", searchRoute);
+app.use("/summarize", summarizeRoute);
+app.use("/item", itemRouter);
+app.use("/group", groupRouter);
 const PORT = process.env.NODEJS_PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

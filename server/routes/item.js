@@ -1,6 +1,6 @@
 const express = require("express");
 const Item = require("../models/Item");
-
+const { authRoute, verifyToken } = require("./auth");
 const itemRouter = express.Router();
 
 // Get all items
