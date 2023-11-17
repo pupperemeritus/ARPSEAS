@@ -2,14 +2,15 @@ const bcrypt = require("bcrypt");
 const express = require("express");
 const dotenv = require("dotenv");
 const User = require("../models/User");
+const bodyParser = require("body-parser");
+const jwt = require("jsonwebtoken");
 dotenv.config();
 
 const authRoute = express.Router();
 const secretKey = process.env.SECRET_KEY;
-
+authRoute.use(express.json());
 authRoute.post("/", async (req, res) => {
     const { email, password } = req.body;
-
     // Find the user by email
     const user = await User.findOne({ email });
 

@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const express = require("express");
+const User = require("../models/User");
+const bcrypt = require("bcrypt");
 
 registerRoute = express.Router();
 
@@ -14,12 +16,11 @@ registerRoute.post("/register", async (req, res) => {
     const user = new User({ username, email, password: hashedPassword });
 
     // Save the user in the database
-    user.save((err) => {
-        if (err) {
+    user.save()
+        .then(() => res.json({ message: "User registered successfully" }))
+        .catch((err) => {
             return res.status(500).json({ message: "Error registering user" });
-        }
-        res.json({ message: "User registered successfully" });
-    });
+        });
 });
 
 module.exports = registerRoute;
