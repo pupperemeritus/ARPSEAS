@@ -12,7 +12,7 @@ authRoute.use(express.json());
 authRoute.post("/", async (req, res) => {
     const { email, password } = req.body;
     // Find the user by email
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ _id: email });
 
     if (!user || !bcrypt.compareSync(password, user.password)) {
         return res.status(401).json({ message: "Invalid credentials" });
@@ -23,6 +23,9 @@ authRoute.post("/", async (req, res) => {
 
     res.json({ token });
 });
+authRoute.post("/isLoggedIn", verifyToken, (req, res) => {
+    res.json({ user: req.user });
+});
 function verifyToken(req, res, next) {
     const token = req.headers.authorization;
     if (!token) {
@@ -31,6 +34,7 @@ function verifyToken(req, res, next) {
 
     jwt.verify(token, secretKey, (err, user) => {
         if (err) {
+            console.log(err);
             return res.status(403).json({ message: "Forbidden" });
         }
         req.user = user;

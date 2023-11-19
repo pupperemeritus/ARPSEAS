@@ -6,7 +6,12 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-origins = ["http://127.0.0.1:3000", "http://localhost:3000"]
+origins = [
+    "http://127.0.0.1:3000",
+    "http://localhost:3000",
+    "https://localhost:3000",
+    "https://127.0.0.1:3000",
+]
 
 
 app.add_middleware(
@@ -67,4 +72,6 @@ async def summarize(input_text: InputText):
         return pipe(text, max_length=200, min_length=30, do_sample=False)[0][
             "summary_text"
         ]
-    return " ".join([summ["summary_text"] for summ in summarization_outputs])
+    return {
+        "summary": " ".join([summ["summary_text"] for summ in summarization_outputs])
+    }

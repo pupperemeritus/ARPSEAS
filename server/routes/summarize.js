@@ -1,15 +1,18 @@
 const express = require("express");
 const axios = require("axios");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 const { verifyToken } = require("./auth");
 
 const summarizeRouter = express.Router();
-
-summarizeRouter.get("/", verifyToken, async (req, res) => {
+summarizeRouter.use(bodyParser.json());
+summarizeRouter.use(cors());
+summarizeRouter.get("/", async (req, res) => {
     const { text } = req.body.text;
 
     try {
         const response = await axios.post(process.env.FASTAPI_URL, {
-            text,
+            text: text,
         });
 
         const summary = response.data;

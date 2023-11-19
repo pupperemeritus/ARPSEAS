@@ -1,10 +1,12 @@
-import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
-import { signIn } from "next-auth/react";
+"use client";
+
+import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid/";
 import React, { useState } from "react";
+import https from "https";
 
 import Sanitize from "./santizeInput";
-
-function Login() {
+const agent = new https.Agent({ rejectUnauthorized: false });
+const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
@@ -20,18 +22,29 @@ function Login() {
         setError(null); // Reset any previous errors
         setIsLoading(true); // Show loading indicator
 
-        const user = await signIn("credentials", {
-            email,
-            password,
-            redirect: true,
-            callbackUrl: "/",
-        });
+        const user = await axios.post(
+            process.env.NEXT_PUBLIC_api_url + "login",
+            {
+                email,
+                password,
+            },
+            {
+                httpsAgent: agent,
+            }
+        );
+        if (user.status === 200) {
+            // Login successful
+            // Redirect the user to the dashboard or any other page
+        } else {
+            // Login failed
+            setError("Invalid email or password");
+        }
         setIsLoading(false); // Hide loading indicator
     };
 
     return (
-        <div className="flex flex-col items-center justify-center w-full h-[calc(100vh-4rem)] py-0 mx-auto my-0 justify-items-center">
-            <form className="w-4/5 px-6 py-3 border-none lg:w-2/5 md:w-3/5 glass">
+        <div className="flex flex-col items-center justify-center w-full h-[calc(100vh-4rem)] py-0 mx-auto my-0 justify-items-center forms">
+            <form className="w-4/5 px-6 py-3 border-none lg:w-2/5 md:w-3/5 glass bg-void">
                 <h2 className="py-4 text-3xl text-center shimmerb text-bblue-200">
                     Login
                 </h2>
@@ -46,7 +59,7 @@ function Login() {
                         onChange={(e) => setEmail(Sanitize(e.target.value))}
                     />
                 </div>
-                <div className="justify-center w-full my-3 ">
+                <div className="justify-center w-full my-3">
                     <label className="text-xl text-bblue-200">Password:</label>
                     <div className="flex justify-between w-full py-2 pl-4 pr-2 my-1 border rounded-lg shadow-md form-control bg-void border-bgold-200">
                         <input
@@ -65,9 +78,9 @@ function Login() {
                                 setIsPasswordVisible(!isPasswordVisible)
                             }>
                             {isPasswordVisible ? (
-                                <EyeIcon className="w-6 h-5 text-gray-500" />
+                                <EyeIcon className="w-6 h-5 text-white-500" />
                             ) : (
-                                <EyeSlashIcon className="w-6 h-5 text-gray-500" />
+                                <EyeOffIcon className="w-6 h-5 text-white-500" />
                             )}
                         </button>
                     </div>
@@ -83,6 +96,6 @@ function Login() {
             </form>
         </div>
     );
-}
+};
 
 export default Login;

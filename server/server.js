@@ -1,10 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const axios = require("axios");
 const https = require("https");
 const fs = require("fs");
 const dotenv = require("dotenv");
+const cors = require("cors");
 const { authRoute, verifyToken } = require("./routes/auth");
 const searchRoute = require("./routes/search");
 const registerRoute = require("./routes/register");
@@ -37,7 +37,8 @@ app.get("/hello", (req, res) => {
 });
 app.use(express.json());
 app.use(bodyParser.json());
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 app.use("/register", registerRoute);
 app.use("/login", authRoute);
 app.use("/search", searchRoute);
@@ -45,7 +46,7 @@ app.use("/summarize", summarizeRoute);
 app.use("/item", itemRouter);
 app.use("/group", groupRouter);
 
-const PORT = process.env.NODEJS_PORT || 3000;
+const PORT = process.env.NODE_PORT;
 https.createServer(options, app).listen(PORT, () => {
     console.log(`HTTPS server is running on port ${PORT}`);
 });

@@ -1,3 +1,6 @@
+"use client";
+import React from "react";
+
 const Dashboard = () => {
     return (
         <div className="flex flex-col items-center justify-center w-full h-[calc(100vh-4rem)] py-0 mx-auto my-0 justify-items-center">
@@ -5,7 +8,6 @@ const Dashboard = () => {
                 <h2 className="py-4 text-3xl text-center shimmerb text-bblue-200">
                     Dashboard
                 </h2>
-                {/* Add your dashboard content here */}
             </div>
         </div>
     );
