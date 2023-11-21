@@ -29,19 +29,6 @@ itemRouter.get("/:id", verifyToken, async (req, res) => {
     }
 });
 
-// Create a new item
-itemRouter.post("/", verifyToken, async (req, res) => {
-    const { title, description, content } = req.body;
-    try {
-        const newItem = new Item({ title, description, content });
-        await newItem.save();
-        res.status(201).json(newItem);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Error creating new item" });
-    }
-});
-
 // Update an existing item
 itemRouter.put("/:id", verifyToken, async (req, res) => {
     const { id } = req.params;
@@ -74,6 +61,38 @@ itemRouter.delete("/:id", verifyToken, async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error deleting item" });
+    }
+});
+// Save items
+itemRouter.post("/save", verifyToken, async (req, res) => {
+    const { itemsToSave } = req.body;
+
+    try {
+        for (const item of itemsToSave) {
+            const newItem = new Item({
+                id: item.id,
+                title: item.title,
+                description: item.description,
+                content: item.content,
+                abstract: item.abstract,
+                summary: item.summary,
+                notes: item.notes,
+                published: item.published,
+                updated: item.updated,
+                author: {
+                    name: item.author.name,
+                },
+                comment: item.comment,
+                journal_ref: item.journal_ref,
+            });
+
+            await newItem.save();
+        }
+
+        res.json({ message: "Items saved successfully" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error saving items" });
     }
 });
 

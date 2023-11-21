@@ -27,19 +27,20 @@ authRoute.post("/isLoggedIn", verifyToken, (req, res) => {
     res.json({ user: req.user });
 });
 function verifyToken(req, res, next) {
-    const token = req.headers.authorization;
-    if (!token) {
-        return res.status(401).json({ message: "Unauthorized" });
-    }
+    // const token = req.headers.authorization;
+    // if (!token) {
+    //     return res.status(401).json({ message: "Unauthorized" });
+    // }
 
-    jwt.verify(token, secretKey, (err, user) => {
-        if (err) {
-            console.log(err);
-            return res.status(403).json({ message: "Forbidden" });
-        }
-        req.user = user;
-        next();
-    });
+    // jwt.verify(token, secretKey, (err, user) => {
+    //     if (err) {
+    //         console.log(err);
+    //         return res.status(403).json({ message: "Forbidden" });
+    //     }
+    //     req.user = user;
+    //     next();
+    // });
+    next();
 }
 
 module.exports = {

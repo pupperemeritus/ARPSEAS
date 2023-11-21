@@ -7,7 +7,7 @@ const { verifyToken } = require("./auth");
 const summarizeRouter = express.Router();
 summarizeRouter.use(bodyParser.json());
 summarizeRouter.use(cors());
-summarizeRouter.get("/", async (req, res) => {
+summarizeRouter.get("/", verifyToken, async (req, res) => {
     const { text } = req.body.text;
 
     try {

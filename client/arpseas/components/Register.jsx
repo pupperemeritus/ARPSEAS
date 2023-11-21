@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import axios from "axios";
-import { redirect } from "next/navigation";
 import Sanitize from "./santizeInput";
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid/";
 import https from "https";
@@ -37,6 +36,7 @@ function Register() {
                 httpsAgent: agent,
             })
             .then(() => {
+                console.log(response.data);
                 router.push("/");
             })
             .catch((error) => {

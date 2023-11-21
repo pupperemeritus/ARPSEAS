@@ -2,6 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const { parseString } = require("xml2js");
 const { authRoute, verifyToken } = require("./auth");
+const Item = require("../models/Item");
 
 const searchRoute = express.Router();
 
@@ -9,13 +10,16 @@ const searchRoute = express.Router();
 searchRoute.use(express.json());
 
 searchRoute.post("/", verifyToken, async (req, res) => {
-    const { query, parameters } = req.body;
+    const { search_query, id_list, start, max_results } = req.body;
 
     try {
         const response = await axios.get("http://export.arxiv.org/api/query", {
             params: {
                 search_query: query,
-                ...parameters, // You can pass additional search parameters
+                search_query,
+                id_list,
+                start,
+                max_results, // You can pass additional search parameters
             },
         });
 

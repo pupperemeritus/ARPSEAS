@@ -1,10 +1,11 @@
 "use client";
 
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/solid/";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import https from "https";
-
+import axios from "axios";
 import Sanitize from "./santizeInput";
+import { AuthContext } from "./AuthContext";
 const agent = new https.Agent({ rejectUnauthorized: false });
 const Login = () => {
     const [email, setEmail] = useState("");

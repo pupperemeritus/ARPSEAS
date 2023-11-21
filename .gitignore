@@ -134,3 +134,5 @@ dist
 *.pem
 *.p12
 *.crt
+*.csr
+*.pyc
