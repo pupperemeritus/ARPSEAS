@@ -16,7 +16,7 @@ export default function Home() {
     const { isLoggedIn, login, logout } = useContext(AuthContext);
     return (
         <Suspense fallback={loading()}>
-            <div className="spacer layer1 h-screen w-screen">
+            <div className="spacer h-screen w-screen">
                 {isLoggedIn ? (
                     <>
                         <Header />
