@@ -8,7 +8,6 @@ const cors = require("cors");
 const { authRoute, verifyToken } = require("./routes/auth");
 const searchRoute = require("./routes/search");
 const registerRoute = require("./routes/register");
-const summarizeRoute = require("./routes/summarize");
 const itemRouter = require("./routes/item");
 const groupRouter = require("./routes/group");
 const cookieParser = require("cookie-parser");
@@ -44,7 +43,6 @@ app.use(cors());
 app.use("/register", registerRoute);
 app.use("/login", authRoute);
 app.use("/search", searchRoute);
-app.use("/summarize", summarizeRoute);
 app.use("/item", itemRouter);
 app.use("/group", groupRouter);
 

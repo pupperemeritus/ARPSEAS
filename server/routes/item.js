@@ -64,35 +64,36 @@ itemRouter.delete("/:id", verifyToken, async (req, res) => {
     }
 });
 // Save items
-itemRouter.post("/save", verifyToken, async (req, res) => {
-    const { itemsToSave } = req.body;
+itemRouter.post("/", verifyToken, async (req, res) => {
+    const { itemToSave } = req.body;
 
     try {
-        for (const item of itemsToSave) {
-            const newItem = new Item({
-                id: item.id,
-                title: item.title,
-                description: item.description,
-                content: item.content,
-                abstract: item.abstract,
-                summary: item.summary,
-                notes: item.notes,
-                published: item.published,
-                updated: item.updated,
-                author: {
-                    name: item.author.name,
-                },
-                comment: item.comment,
-                journal_ref: item.journal_ref,
-            });
+        const newItem = new Item({
+            id: itemToSave.id,
+            title: itemToSave.title,
+            description: itemToSave.description,
+            content: itemToSave.content,
+            abstract: itemToSave.abstract,
+            summary: itemToSave.summary,
+            notes: itemToSave.notes,
+            published: itemToSave.published,
+            updated: itemToSave.updated,
+            author: {
+                name: itemToSave.author.name,
+            },
+            comment: itemToSave.comment,
+            journal_ref: itemToSave.journal_ref,
+            // Additional fields
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        });
 
-            await newItem.save();
-        }
+        await newItem.save();
 
-        res.json({ message: "Items saved successfully" });
+        res.json({ message: "Item saved successfully" });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: "Error saving items" });
+        res.status(500).json({ message: "Error saving item" });
     }
 });
 
