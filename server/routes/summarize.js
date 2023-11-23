@@ -8,7 +8,7 @@ const summarizeRouter = express.Router();
 summarizeRouter.use(bodyParser.json());
 summarizeRouter.use(cors());
 summarizeRouter.get("/", verifyToken, async (req, res) => {
-    const { text } = req.body.text;
+    const text = req.body.text;
 
     try {
         const response = await axios.post(process.env.FASTAPI_URL, {
@@ -16,7 +16,7 @@ summarizeRouter.get("/", verifyToken, async (req, res) => {
         });
 
         const summary = response.data;
-        res.json({ summary });
+        res.status(200).json(summary);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Failed to fetch summary" });

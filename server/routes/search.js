@@ -9,13 +9,12 @@ const searchRoute = express.Router();
 // Apply middleware to parse the request body as JSON
 searchRoute.use(express.json());
 
-searchRoute.post("/", verifyToken, async (req, res) => {
+searchRoute.get("/", verifyToken, async (req, res) => {
     const { search_query, id_list, start, max_results } = req.body;
 
     try {
         const response = await axios.get("http://export.arxiv.org/api/query", {
             params: {
-                search_query: query,
                 search_query,
                 id_list,
                 start,
@@ -32,7 +31,7 @@ searchRoute.post("/", verifyToken, async (req, res) => {
             results = result;
         });
 
-        res.json({ results });
+        res.json(results);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "ArXiv search failed" });

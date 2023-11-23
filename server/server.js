@@ -11,6 +11,7 @@ const registerRoute = require("./routes/register");
 const summarizeRoute = require("./routes/summarize");
 const itemRouter = require("./routes/item");
 const groupRouter = require("./routes/group");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.get("/hello", (req, res) => {
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(cors());
 app.use("/register", registerRoute);
 app.use("/login", authRoute);
