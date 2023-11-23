@@ -65,27 +65,22 @@ itemRouter.delete("/:id", verifyToken, async (req, res) => {
 });
 // Save items
 itemRouter.post("/", verifyToken, async (req, res) => {
-    const { itemToSave } = req.body;
+    const itemToSave = req.body;
+    console.log(itemToSave);
 
     try {
         const newItem = new Item({
-            id: itemToSave.id,
-            title: itemToSave.title,
-            description: itemToSave.description,
-            content: itemToSave.content,
-            abstract: itemToSave.abstract,
-            summary: itemToSave.summary,
-            notes: itemToSave.notes,
-            published: itemToSave.published,
-            updated: itemToSave.updated,
-            author: {
-                name: itemToSave.author.name,
-            },
-            comment: itemToSave.comment,
-            journal_ref: itemToSave.journal_ref,
-            // Additional fields
-            createdAt: new Date(),
-            updatedAt: new Date(),
+            _id: request.id[0],
+            updated: request.updated[0],
+            published: request.published[0],
+            title: request.title[0],
+            summary: request.summary,
+            author: request.author,
+            comment: request["arxiv:comment"][0],
+            link: request.link,
+            primary_category: request["arxiv:primary_category"][0],
+            category: request.category[0],
+            abstract: request.abstract,
         });
 
         await newItem.save();
