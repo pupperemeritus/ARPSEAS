@@ -6,7 +6,8 @@ const itemRouter = express.Router();
 // Get all items
 itemRouter.get("/", verifyToken, async (req, res) => {
     try {
-        const items = await Item.find();
+        const userId = req.body.userId;
+        const items = await Item.find({ userId });
         res.json(items);
     } catch (error) {
         console.error(error);
@@ -32,17 +33,17 @@ itemRouter.get("/:id", verifyToken, async (req, res) => {
 // Update an existing item
 itemRouter.put("/:id", verifyToken, async (req, res) => {
     const { id } = req.params;
-    const { title, description, content } = req.body;
+
     try {
-        const item = await Item.findByIdAndUpdate(
-            id,
-            { title, description, content },
-            { new: true }
-        );
-        if (!item) {
+        const updatedItem = await Item.findByIdAndUpdate(id, req.body, {
+            new: true,
+        });
+
+        if (!updatedItem) {
             return res.status(404).json({ message: "Item not found" });
         }
-        res.json(item);
+
+        res.json(updatedItem);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error updating item" });
@@ -70,17 +71,18 @@ itemRouter.post("/", verifyToken, async (req, res) => {
 
     try {
         const newItem = new Item({
-            _id: request.id[0],
-            updated: request.updated[0],
-            published: request.published[0],
-            title: request.title[0],
-            summary: request.summary,
-            author: request.author,
-            comment: request["arxiv:comment"][0],
-            link: request.link,
-            primary_category: request["arxiv:primary_category"][0],
-            category: request.category[0],
-            abstract: request.abstract,
+            "_id": itemToSave.id[0],
+            "updated": itemToSave.updated[0],
+            "published": itemToSave.published[0],
+            "title": itemToSave.title[0],
+            "summary": itemToSave.summary,
+            "author": itemToSave.author,
+            "arxiv:comment": itemToSave["arxiv:comment"],
+            "link": itemToSave.link,
+            "arxiv:primary_category": itemToSave["arxiv:primary_category"],
+            "category": itemToSave.category,
+            "abstract": itemToSave.abstract,
+            "userId": itemToSave.userId,
         });
 
         await newItem.save();

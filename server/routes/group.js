@@ -1,11 +1,14 @@
 const express = require("express");
 const groupRouter = express.Router();
 const Group = require("../models/Group");
+const mongoose = require("mongoose");
 const { authRoute, verifyToken } = require("./auth");
 // Get all groups
 groupRouter.get("/", verifyToken, async (req, res) => {
     try {
-        const groups = await Group.find().populate("items");
+        const userId = req.body.userId; // Assuming the userId is available in the request
+
+        const groups = await Group.find({ userId }).populate("items");
         res.json(groups);
     } catch (error) {
         console.error(error);
@@ -15,8 +18,7 @@ groupRouter.get("/", verifyToken, async (req, res) => {
 
 groupRouter.post("/", verifyToken, async (req, res) => {
     try {
-        const { name, userId, items } = req.body;
-
+        let { name, userId, items } = req.body;
         const newGroup = new Group({ name, userId, items });
         await newGroup.save();
 
