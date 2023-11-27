@@ -47,6 +47,12 @@ app.use("/item", itemRouter);
 app.use("/group", groupRouter);
 
 const PORT = process.env.NODE_PORT;
-https.createServer(options, app).listen(PORT, () => {
-    console.log(`HTTPS server is running on port ${PORT}`);
-});
+if (process.env.HTTPS_TRUE == true) {
+    https.createServer(options, app).listen(PORT, () => {
+        console.log(`HTTPS server is running on port ${PORT}`);
+    });
+} else {
+    app.listen(PORT, () => {
+        console.log(`HTTP server is running on port ${PORT}`);
+    });
+}
