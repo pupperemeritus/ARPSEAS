@@ -2,7 +2,10 @@ from fastapi import FastAPI
 from transformers import pipeline
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+import dotenv
+import os
 
+dotenv.load_dotenv()
 
 app = FastAPI()
 
@@ -49,7 +52,11 @@ def split_string_by_length(string, length):
     return res
 
 
-pipe = pipeline("summarization", device=0, model="sshleifer/distilbart-cnn-12-6")
+pipe = pipeline(
+    "summarization",
+    device=int(os.getenv("DEVICE")),
+    model="sshleifer/distilbart-cnn-12-6",
+)
 
 
 class InputText(BaseModel):
