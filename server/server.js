@@ -10,8 +10,8 @@ const searchRoute = require("./routes/search");
 const registerRoute = require("./routes/register");
 const itemRouter = require("./routes/item");
 const groupRouter = require("./routes/group");
+const searchhistory = require("./routes/searchhistory");
 const cookieParser = require("cookie-parser");
-
 const app = express();
 
 dotenv.config();

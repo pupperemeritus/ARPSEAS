@@ -32,7 +32,7 @@ async function processResults(results, cookie) {
         results[i].abstract = cleanAbstract(String(results[i].summary));
         results[i].summary = await axios
             .post(
-                process.env.FASTAPI_URL,
+                process.env.NODE_URL + "summarize",
                 {
                     text: results[i].abstract,
                 },
@@ -72,7 +72,21 @@ searchRoute.get("/", verifyToken, async (req, res) => {
             results = result.feed.entry;
         });
         results = await processResults(results, req.cookies.jwt);
-
+        const search_history = axios.post(
+            process.env.NODE_URL + "searchhistory",
+            {
+                search_query,
+                id_list,
+                start,
+                max_results,
+            },
+            {
+                httpsAgent: agent,
+                headers: {
+                    Cookie: req.cookies.jwt,
+                },
+            }
+        );
         res.json(results);
     } catch (error) {
         console.error(error);
