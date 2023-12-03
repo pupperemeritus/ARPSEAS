@@ -7,7 +7,7 @@ import Hero from "@/components/Hero";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 const loading = () => (
-    <div className="flex justify-center w-min mx-auto text-6xl items-center justify-center gap-4 px-8 py-4 my-40 glass h-min">
+    <div className="flex items-center justify-center gap-4 px-8 py-4 mx-auto my-40 text-6xl w-min glass h-min">
         <h2 className="py-4 text-3xl text-center shimmerb text-bblue-200">
             Loading...
         </h2>
@@ -16,18 +16,18 @@ const loading = () => (
 export default function Home() {
     const router = useRouter();
 
-    useEffect(() => {
-        if (isLoggedIn) {
-            router.push("/user");
-        }
-    }, [isLoggedIn]);
+    // useEffect(() => {
+    //     if (isLoggedIn) {
+    //         router.push("/user");
+    //     }
+    // }, [isLoggedIn]);
 
     return (
         <Suspense fallback={loading()}>
-            <div className="h-screen w-screen">
-                {isLoggedIn ? (
+            <div className="w-screen h-screen">
+                {1 ? (
                     <>
-                        <header className="absolute top-0 left-0 right-0 bg-transparent z-20 p-4 text-white ">
+                        <header className="absolute top-0 left-0 right-0 z-20 p-4 text-white bg-transparent ">
                             <span className="text-4xl">arpseas</span>
                             <span className=""></span>
                         </header>

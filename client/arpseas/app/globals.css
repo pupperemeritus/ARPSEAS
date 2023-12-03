@@ -11,24 +11,30 @@
 .shimmerb {
     text-align: center;
     color: rgba(255, 255, 255, 0.1);
-    background: -webkit-gradient(linear,
-            left top,
-            right top,
-            from(#33b6d8),
-            to(#33b6d8),
-            color-stop(0.3, #b2f3e0));
-    background: -moz-gradient(linear,
-            left top,
-            right top,
-            from(#33b6d8),
-            to(#33b6d8),
-            color-stop(0.3, #b2f3e0));
-    background: gradient(linear,
-            left top,
-            right top,
-            from(#33b6d8),
-            to(#33b6d8),
-            color-stop(0.3, #b2f3e0));
+    background: -webkit-gradient(
+        linear,
+        left top,
+        right top,
+        from(#33b6d8),
+        to(#33b6d8),
+        color-stop(0.3, #b2f3e0)
+    );
+    background: -moz-gradient(
+        linear,
+        left top,
+        right top,
+        from(#33b6d8),
+        to(#33b6d8),
+        color-stop(0.3, #b2f3e0)
+    );
+    background: gradient(
+        linear,
+        left top,
+        right top,
+        from(#33b6d8),
+        to(#33b6d8),
+        color-stop(0.3, #b2f3e0)
+    );
     -webkit-background-size: 70px 100%;
     -moz-background-size: 70px 100%;
     background-size: 70px 100%;
@@ -135,8 +141,6 @@
     border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-
-
 body {
     color: rgb(var(--foreground-rgb));
     /* background: linear-gradient(
@@ -145,7 +149,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb)); */
-    background: #807d84;
+    background: #333333;
     /* background: linear-gradient(
     130deg,
     rgba(15, 9, 19, 1) 28%,
