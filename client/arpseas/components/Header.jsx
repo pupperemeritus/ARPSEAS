@@ -9,7 +9,7 @@ const Navbar = () => {
                         <div className="flex-shrink-0">
                             <Image
                                 className="h-8 w-8"
-                                src="/arpseaslogo.png"
+                                src="/arpseaslogocropped.png"
                                 width={540}
                                 height={540}
                                 alt="Logo"
@@ -18,17 +18,17 @@ const Navbar = () => {
                         <div className="hidden md:block">
                             <div className="ml-10 flex items-baseline space-x-4">
                                 <a
-                                    href="#"
+                                    href="/user"
                                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                     Home
                                 </a>
                                 <a
-                                    href="#"
+                                    href="/about"
                                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                     About
                                 </a>
                                 <a
-                                    href="#"
+                                    href="/contact"
                                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
                                     Contact
                                 </a>
@@ -43,11 +43,16 @@ const Navbar = () => {
 
 const Header = () => {
     return (
-        <header>
-            <h1 className="w-full text-4xl text-center font-bold text-gray-800">
-                ARPSEAS
-            </h1>
-            <Navbar />
+        <header className="bg-black border-b border-white">
+            <span>
+                {" "}
+                <h1 className="pt-2 w-full text-4xl text-center font-bold text-">
+                    arpseas
+                </h1>
+            </span>
+            <span>
+                <Navbar />
+            </span>
         </header>
     );
 };

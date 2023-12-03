@@ -1,9 +1,9 @@
 import "./globals.css";
-import { JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono , Kanit, Roboto} from "next/font/google";
 import { AuthContext, AuthProvider } from "@/components/AuthContext";
-const jetBrains_mono = JetBrains_Mono({
+const jetBrains_mono = Kanit({
     subsets: ["latin"],
-    weight: ["400", "500", "700", "800"],
+    weight: ["400", "500", "700", "900"],
 });
 
 export const metadata = {

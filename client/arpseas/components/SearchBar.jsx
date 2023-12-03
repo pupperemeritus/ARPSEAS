@@ -1,47 +1,85 @@
-import React, { useState } from "react";
-import Image from "next/image";
+import React, { useState, useRef, useEffect } from "react";
+
+const SearchIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    fill="black"
+    className="bi bi-search"
+    viewBox="0 0 16 16"
+  >
+    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+  </svg>
+);
+
 const SearchBar = () => {
-    const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showOptions, setShowOptions] = useState(false);
+  const buttonRef = useRef(null);
 
-    const handleSearch = () => {
-        // Add your search logic here
-        console.log("Searching for:", searchQuery);
+  const handleSearch = () => {
+    // Add your search logic here
+    console.log("Searching for:", searchQuery);
+  };
+
+  const handleToggleOptions = () => {
+    setShowOptions(!showOptions);
+  };
+
+  const handleClickOutside = (event) => {
+    if (buttonRef.current && !buttonRef.current.contains(event.target)) {
+      setShowOptions(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
     };
+  }, []);
 
-    return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-16">
-                <div className="flex items-center">
-                    <div className="flex-shrink-0">
-                        <Image
-                            className="h-8 w-8"
-                            src="/arpseaslogo.png"
-                            width={540}
-                            height={540}
-                            alt="Logo"
-                        />
-                    </div>
-                    <div className="hidden md:block">
-                        <div className="ml-10 flex items-baseline space-x-4">
-                            {/* Add your search bar input here */}
-                            <input
-                                type="text"
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                className="px-3 py-2 rounded-md text-sm font-medium bg-gray-300 text-gray-700"
-                                placeholder="Search..."
-                            />
-                            <button
-                                onClick={handleSearch}
-                                className="px-3 py-2 rounded-md text-sm font-medium bg-gray-300 text-gray-700 hover:bg-gray-700 hover:text-white">
-                                Search
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  const options = ["Option 1", "Option 2", "Option 3"]; // Replace with your actual options
+
+  return (
+    <>
+      <div className="flex justify-center items-center">
+        <div className="relative">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className=" my-6 pl-8 pr-3  py-2 rounded-full text-sm font-medium bg-gray-300 text-gray-700 w-96" // Adjust the width here
+          />
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <SearchIcon />
+          </div>
         </div>
-    );
+        <button
+          ref={buttonRef}
+          onClick={handleToggleOptions}
+          className="ml-2 px-4 py-2 rounded-full bg-gray-300 text-gray-700 font-medium"
+        >
+          Options
+        </button>
+      </div>
+      {showOptions && (
+        <div
+          className="absolute mt-2 border rounded-md shadow-md"
+          style={{ width: buttonRef.current.offsetWidth }}
+        >
+          <ul className="list-none p-0">
+            {options.map((option) => (
+              <li key={option} className="py-2 px-4 hover:bg-gray-100 cursor-pointer">
+                {option}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </>
+  );
 };
 
 export default SearchBar;

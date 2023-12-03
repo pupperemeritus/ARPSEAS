@@ -135,9 +135,7 @@
     border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-.layer1 {
-    background-image: url("../public/heroimage.jpeg");
-}
+
 
 body {
     color: rgb(var(--foreground-rgb));
@@ -147,7 +145,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb)); */
-    background: #0f0913;
+    background: #807d84;
     /* background: linear-gradient(
     130deg,
     rgba(15, 9, 19, 1) 28%,
