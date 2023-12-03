@@ -1,6 +1,7 @@
 import "./globals.css";
-import { JetBrains_Mono , Kanit, Roboto} from "next/font/google";
-import { AuthContext, AuthProvider } from "@/components/AuthContext";
+import { JetBrains_Mono, Kanit, Roboto } from "next/font/google";
+import { CookiesProvider } from "react-cookie";
+
 const jetBrains_mono = Kanit({
     subsets: ["latin"],
     weight: ["400", "500", "700", "900"],
@@ -21,7 +22,7 @@ export default function RootLayout({ children }) {
                 />
             </head>
             <body className={jetBrains_mono.className}>
-                <AuthProvider>{children}</AuthProvider>
+                <CookiesProvider>{children}</CookiesProvider>
             </body>
         </html>
     );

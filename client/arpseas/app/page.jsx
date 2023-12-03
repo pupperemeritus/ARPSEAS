@@ -2,8 +2,7 @@
 import React, { Suspense, useContext, useEffect } from "react";
 import Dashboard from "@/components/Dashboard";
 import Header from "@/components/Header";
-// import Login from "@/components/Login";
-import { AuthContext } from "@/components/AuthContext";
+import Login from "@/components/Login";
 import Hero from "@/components/Hero";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -15,12 +14,11 @@ const loading = () => (
     </div>
 );
 export default function Home() {
-    const { isLoggedIn, login, logout } = useContext(AuthContext);
     const router = useRouter();
 
     useEffect(() => {
         if (isLoggedIn) {
-            router.push('/user');
+            router.push("/user");
         }
     }, [isLoggedIn]);
 
@@ -32,13 +30,13 @@ export default function Home() {
                         <header className="absolute top-0 left-0 right-0 bg-transparent z-20 p-4 text-white ">
                             <span className="text-4xl">arpseas</span>
                             <span className=""></span>
-
                         </header>
                         <Dashboard />
                     </>
                 ) : (
                     <>
                         <Hero />
+                        <Login />
                     </>
                 )}
             </div>
