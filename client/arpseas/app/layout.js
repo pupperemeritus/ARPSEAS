@@ -1,6 +1,5 @@
 import "./globals.css";
 import { JetBrains_Mono, Kanit, Roboto } from "next/font/google";
-import { CookiesProvider } from "react-cookie";
 
 const jetBrains_mono = Kanit({
     subsets: ["latin"],
@@ -21,9 +20,7 @@ export default function RootLayout({ children }) {
                     content="width=device-width, initial-scale=1"
                 />
             </head>
-            <body className={jetBrains_mono.className}>
-                <CookiesProvider>{children}</CookiesProvider>
-            </body>
+            <body className={jetBrains_mono.className}>{children}</body>
         </html>
     );
 }
