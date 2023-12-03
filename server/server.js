@@ -15,10 +15,12 @@ const cookieParser = require("cookie-parser");
 const app = express();
 
 dotenv.config();
-const options = {
-    key: fs.readFileSync(process.env.SSL_KEY),
-    cert: fs.readFileSync(process.env.SSL_CERTIFICATE),
-};
+if (process.env.HTTPS_TRUE == true) {
+    const options = {
+        key: fs.readFileSync(process.env.SSL_KEY),
+        cert: fs.readFileSync(process.env.SSL_CERTIFICATE),
+    };
+}
 
 mongoose
     .connect(process.env.MONGODB_URL, {

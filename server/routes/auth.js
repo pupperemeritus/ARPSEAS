@@ -29,7 +29,7 @@ authRoute.post("/", async (req, res) => {
         sameSite: "strict",
     });
 
-    res.send("Logged in successfully");
+    res.json({ message: "Logged in successfully" });
 });
 
 function verifyToken(req, res, next) {
