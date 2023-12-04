@@ -28,8 +28,8 @@ authRoute.post("/", async (req, res) => {
         secure: true,
         sameSite: "strict",
     });
-
-    res.json({ message: "Logged in successfully" });
+    user.token = token;
+    res.json({ user: user });
 });
 
 function verifyToken(req, res, next) {

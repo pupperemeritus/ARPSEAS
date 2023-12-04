@@ -1,6 +1,10 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { setCookie } from "nookies";
+import dotenv from "dotenv";
+import axios from "axios";
 
+dotenv.config();
 export const authOptions = {
     providers: [
         CredentialsProvider({
@@ -8,28 +12,33 @@ export const authOptions = {
             credentials: {},
 
             async authorize(credentials) {
-                const { email, password } = credentials;
+                if (!credentials?.email || !credentials?.password) {
+                    throw new Error("Invalid credentials");
+                }
 
                 try {
-                    // await connectMongoDB();
-                    // const user = await User.findOne({ email });
+                    const response = await axios.post(
+                        process.env.NODE_URL + "login",
+                        {
+                            username: credentials.username,
+                            password: credentials.password,
+                        },
+                        {
+                            headers: { "Content-Type": "application/json" },
+                        }
+                    );
+                    const { user } = response.data;
 
-                    // if (!user) {
-                    //     return null;
-                    // }
+                    // Return the user object if the response is successful
+                    if (response.status === 200) {
+                        return user;
+                    }
 
-                    // const passwordsMatch = await bcrypt.compare(
-                    //     password,
-                    //     user.password
-                    // );
-
-                    // if (!passwordsMatch) {
-                    //     return null;
-                    // }
-
-                    return user;
+                    // Return null if user data could not be retrieved
+                    return null;
                 } catch (error) {
-                    console.log("Error: ", error);
+                    console.log(error);
+                    throw new Error("Failed to authenticate");
                 }
             },
         }),
@@ -40,6 +49,11 @@ export const authOptions = {
     secret: process.env.SECRET_KEY,
     pages: {
         signIn: "/",
+    },
+    callbacks: {
+        async jwt({ token, user, account, profile, isNewUser }) {
+            return user.token;
+        },
     },
 };
 

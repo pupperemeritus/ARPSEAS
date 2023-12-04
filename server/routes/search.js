@@ -72,7 +72,7 @@ searchRoute.get("/", verifyToken, async (req, res) => {
             results = result.feed.entry;
         });
         results = await processResults(results, req.cookies.jwt);
-        const search_history = axios.post(
+        const search_history = await axios.post(
             process.env.NODE_URL + "searchhistory",
             {
                 search_query,
@@ -87,7 +87,7 @@ searchRoute.get("/", verifyToken, async (req, res) => {
                 },
             }
         );
-        res.json(results);
+        res.json(results, search_history);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "ArXiv search failed" });
