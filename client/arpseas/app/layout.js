@@ -1,3 +1,4 @@
+import Header from "@/components/Header";
 import "./globals.css";
 import { JetBrains_Mono, Kanit, Roboto } from "next/font/google";
 

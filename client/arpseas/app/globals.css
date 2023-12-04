@@ -171,3 +171,19 @@ body {
 .forms {
     color: #26b6da;
 }
+
+.spacer {
+    aspect-ratio: 900/600;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.layer1 {
+    background-image: url("/emerald-layered-wave.svg");
+}
+
+.layer2 {
+    background-image: url("/vertical-wave.svg");
+}
