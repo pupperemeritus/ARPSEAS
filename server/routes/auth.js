@@ -12,6 +12,7 @@ const secretKey = process.env.SECRET_KEY;
 authRoute.use(express.json());
 authRoute.use(cookieParser());
 authRoute.post("/", async (req, res) => {
+    console.log("auth attempted");
     const { email, password } = req.body;
     // Find the user by email
     const user = await User.findOne({ _id: email });

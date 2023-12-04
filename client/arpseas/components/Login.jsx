@@ -83,8 +83,7 @@ const Login = () => {
                             className="text-xl text-white duration-300 border rounded-lg cursor-pointer bg-emerald-500 hover:bg-emerald-600"
                             onClick={() =>
                                 setIsPasswordVisible(!isPasswordVisible)
-                            }
-                        >
+                            }>
                             {isPasswordVisible ? (
                                 <EyeIcon className="w-6 h-5" />
                             ) : (
@@ -97,8 +96,7 @@ const Login = () => {
                     <button
                         type="button"
                         className="px-4 py-2 my-2 text-xl font-bold duration-300 border rounded-lg cursor-pointer text-emerald-500 border-emerald-500 hover:text-white hover:bg-emerald-500"
-                        onClick={handleLogin}
-                    >
+                        onClick={handleLogin}>
                         {isLoading ? "Logging in..." : "Login"}
                     </button>
                 </div>

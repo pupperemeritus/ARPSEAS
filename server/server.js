@@ -47,6 +47,7 @@ app.use("/login", authRoute);
 app.use("/search", searchRoute);
 app.use("/item", itemRouter);
 app.use("/group", groupRouter);
+app.use("/searchhistory", searchhistory);
 
 const PORT = process.env.NODE_PORT;
 if (process.env.HTTPS_TRUE == true) {

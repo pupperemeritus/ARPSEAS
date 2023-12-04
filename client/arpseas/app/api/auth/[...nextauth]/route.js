@@ -1,6 +1,5 @@
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { setCookie } from "nookies";
 import dotenv from "dotenv";
 import axios from "axios";
 
@@ -18,9 +17,9 @@ export const authOptions = {
 
                 try {
                     const response = await axios.post(
-                        process.env.NODE_URL + "login",
+                        process.env.NEXT_PUBLIC_api_url + "login",
                         {
-                            username: credentials.username,
+                            email: credentials.email,
                             password: credentials.password,
                         },
                         {
@@ -46,7 +45,7 @@ export const authOptions = {
     session: {
         strategy: "jwt",
     },
-    secret: process.env.SECRET_KEY,
+    secret: process.env.NEXT_PUBLIC_SECRET_KEY,
     pages: {
         signIn: "/",
     },

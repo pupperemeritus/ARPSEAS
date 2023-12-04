@@ -1,81 +1,29 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
 import SearchResult from "./SearchResult";
+import useFetchItems from "./useItem";
+import useFetchGroups from "./useGroup";
+import useFetchHistory from "./useHistory";
 
 const Dashboard = () => {
-    const savedItems = [
+    const { savedItems, loading, error } = useFetchItems();
+    const { groups, loading1, error1 } = useFetchGroups();
+    const { history, loading2, error2 } = useFetchHistory();
+    const { searchResult, setSearchResult } = useState([
         {
-            title: "Item 1",
-            url: "https://www.google.com/",
+            "id": [""],
+            "updated": [""],
+            "published": [""],
+            "title": [""],
+            "author": [{}],
+            "link": [{}],
+            "arxiv:primary_category": [{}],
+            "category": [{}],
+            "abstract": "",
         },
-        {
-            title: "Item 2",
-            url: "https://www.google.com/",
-        },
-        {
-            title: "Item 3",
-            url: "https://www.google.com/",
-        },
-    ];
-    const groupItems = [
-        { id: 1, name: "Group 1" },
-        { id: 2, name: "Group 2" },
-        { id: 3, name: "Group 3" },
-    ]; // Replace with your actual saved items data
-    const histItems = ["Item 1", "Item 2", "Item 3"]; // Replace with your actual saved items data
-
-    const pub = [
-        {
-            id: ["http://arxiv.org/abs/1608.07166v1"],
-            updated: ["2016-08-25T14:24:38Z"],
-            published: ["2016-08-25T14:24:38Z"],
-            title: ["The Pegasus Tiles: an aperiodic pair of tiles"],
-            author: [
-                {
-                    name: ["Chaim Goodman-Strauss"],
-                },
-            ],
-            link: [
-                {
-                    $: {
-                        href: "http://arxiv.org/abs/1608.07166v1",
-                        rel: "alternate",
-                        type: "text/html",
-                    },
-                },
-                {
-                    $: {
-                        title: "pdf",
-                        href: "http://arxiv.org/pdf/1608.07166v1",
-                        rel: "related",
-                        type: "application/pdf",
-                    },
-                },
-            ],
-            "arxiv:primary_category": [
-                {
-                    $: {
-                        "xmlns:arxiv": "http://arxiv.org/schemas/atom",
-                        term: "math.CO",
-                        scheme: "http://arxiv.org/schemas/atom",
-                    },
-                },
-            ],
-            category: [
-                {
-                    $: {
-                        term: "math.CO",
-                        scheme: "http://arxiv.org/schemas/atom",
-                    },
-                },
-            ],
-            abstract:
-                "The Pegasus tiles are an aperiodic pair of tiles with tip to tip matching rules first drawn in 1996 We present them here",
-        },
-    ];
-
+    ]);
     return (
         <>
             {/* <div className="grid w-full grid-cols-10 grid-rows-2 gap-1 text-white h-max grid-container spacer layer2">
@@ -142,12 +90,10 @@ const Dashboard = () => {
                                         href={item.url}
                                         passHref
                                         legacyBehavior
-                                        className="text-gray-300 "
-                                    >
+                                        className="text-gray-300 ">
                                         <a
                                             target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
+                                            rel="noopener noreferrer">
                                             {item.title}
                                         </a>
                                     </Link>
@@ -161,13 +107,12 @@ const Dashboard = () => {
                             Groups
                         </h3>
                         <ul>
-                            {groupItems.map((item, index) => (
+                            {groups.map((item, index) => (
                                 <Link
                                     href={`/groups/${item.name}`}
                                     key={index}
                                     groupName={item}
-                                    className="text-gray-300 "
-                                >
+                                    className="text-gray-300 ">
                                     <li key={index}>{item.name}</li>
                                 </Link>
                             ))}
@@ -179,8 +124,10 @@ const Dashboard = () => {
                             History
                         </h3>
                         <ul>
-                            {histItems.map((item, index) => (
-                                <li key={index} className="text-gray-300 ">
+                            {history.map((item, index) => (
+                                <li
+                                    key={index}
+                                    className="text-gray-300 ">
                                     {item}
                                 </li>
                             ))}
@@ -193,7 +140,7 @@ const Dashboard = () => {
                     </h3>
                     <SearchBar />
                     <div className="mt-4 overflow-y-auto max-h-96">
-                        <SearchResult data={pub} />
+                        <SearchResult data={searchResult} />
                     </div>
                 </div>
             </div>

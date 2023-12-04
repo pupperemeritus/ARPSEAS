@@ -1,13 +1,15 @@
 import React from "react";
 
 const SearchResult = ({ data }) => {
+    if (!data || !Array.isArray(data)) {
+        return null; // or handle the case when data is not available
+    }
     return (
         <div>
             {data.map((item) => (
                 <div
                     key={item.id[0]}
-                    className="px-8 py-4 mb-4 shadow-lg bg-[#444444] rounded-xl "
-                >
+                    className="px-8 py-4 mb-4 shadow-lg bg-[#444444] rounded-xl ">
                     <h2 className="mb-2 text-xl font-semibold text-emerald-300">
                         {item.title[0]}
                     </h2>
@@ -26,8 +28,7 @@ const SearchResult = ({ data }) => {
                             }
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-500 hover:underline"
-                        >
+                            className="text-blue-500 hover:underline">
                             Read PDF
                         </a>
                         <span className="mx-2">|</span>
@@ -38,8 +39,7 @@ const SearchResult = ({ data }) => {
                             }
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-500 hover:underline"
-                        >
+                            className="text-blue-500 hover:underline">
                             View on arXiv
                         </a>
                     </div>
