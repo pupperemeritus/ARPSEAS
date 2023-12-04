@@ -51,7 +51,7 @@ async function processResults(results, cookie) {
     return results;
 }
 searchRoute.get("/", verifyToken, async (req, res) => {
-    const { search_query, id_list, start, max_results } = req.body;
+    const { search_query, id_list, start, max_results, userId } = req.body;
 
     try {
         const response = await axios.get("http://export.arxiv.org/api/query", {
@@ -75,10 +75,9 @@ searchRoute.get("/", verifyToken, async (req, res) => {
         const search_history = await axios.post(
             process.env.NODE_URL + "searchhistory",
             {
-                search_query,
-                id_list,
-                start,
-                max_results,
+                query: search_query,
+                results: results,
+                userId: userId,
             },
             {
                 httpsAgent: agent,

@@ -1,6 +1,7 @@
-import Header from "@/components/Header";
 import "./globals.css";
 import { JetBrains_Mono, Kanit, Roboto } from "next/font/google";
+import SessionProvider from "@/components/SessionProvider";
+import Head from "next/head";
 
 const jetBrains_mono = Kanit({
     subsets: ["latin"],
@@ -15,13 +16,15 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <head>
+            <Head>
                 <meta
                     name="viewport"
                     content="width=device-width, initial-scale=1"
                 />
-            </head>
-            <body className={jetBrains_mono.className}>{children}</body>
+            </Head>
+            <body className={jetBrains_mono.className}>
+                <SessionProvider>{children}</SessionProvider>
+            </body>
         </html>
     );
 }

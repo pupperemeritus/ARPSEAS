@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-
+import axios from "axios";
 const SearchIcon = () => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -8,22 +8,30 @@ const SearchIcon = () => (
         height="16"
         fill="black"
         className="bi bi-search"
-        viewBox="0 0 16 16"
-    >
+        viewBox="0 0 16 16">
         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
     </svg>
 );
 
-const SearchBar = () => {
+const SearchBar = (setSearchResult) => {
     const [searchQuery, setSearchQuery] = useState("");
     const [maxResults, setMaxResults] = useState(5);
     const [start, setStart] = useState(0);
     const [showOptions, setShowOptions] = useState(false);
     const buttonRef = useRef(null);
 
-    const handleSearch = () => {
+    const handleSearch = async () => {
         // Add your search logic here
         console.log("Searching for:", searchQuery);
+        const searchRes = await axios.get(
+            process.env.NEXT_PUBLIC_api_url + "search",
+            {
+                query: searchQuery,
+                maxResults: maxResults,
+                start: start,
+            }
+        );
+        setSearchResult(searchRes.data);
     };
 
     const handleToggleOptions = () => {
@@ -63,8 +71,7 @@ const SearchBar = () => {
                     <button
                         ref={buttonRef}
                         onClick={handleSearch}
-                        className="px-4 py-2 ml-2 font-medium text-gray-700 bg-gray-300 rounded-full"
-                    >
+                        className="px-4 py-2 ml-2 font-medium text-gray-700 bg-gray-300 rounded-full">
                         Search
                     </button>
                 </div>

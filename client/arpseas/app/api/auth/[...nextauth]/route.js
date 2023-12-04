@@ -2,7 +2,7 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import dotenv from "dotenv";
 import axios from "axios";
-
+import { setCookie } from "nookies";
 dotenv.config();
 export const authOptions = {
     providers: [
@@ -26,8 +26,12 @@ export const authOptions = {
                             headers: { "Content-Type": "application/json" },
                         }
                     );
-                    const { user } = response.data;
-
+                    const { user, token } = response.data;
+                    console.log("authorize");
+                    console.log(user);
+                    console.log(token);
+                    user.name = user.username;
+                    user.email = user._id;
                     // Return the user object if the response is successful
                     if (response.status === 200) {
                         return user;
@@ -50,8 +54,14 @@ export const authOptions = {
         signIn: "/",
     },
     callbacks: {
-        async jwt({ token, user, account, profile, isNewUser }) {
-            return user.token;
+        async jwt({ user, token }) {
+            // console.log(user);
+
+            return token;
+        },
+        async session({ session, user }) {
+            session.user = user;
+            return session;
         },
     },
 };

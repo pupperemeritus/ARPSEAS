@@ -9,7 +9,7 @@ const useFetchItems = () => {
     useEffect(() => {
         const fetchItems = async () => {
             try {
-                const response = await axios.get("http://localhost:3001/items");
+                const response = await axios.get("http://localhost:3001/item");
                 setItems(response.data);
                 setLoading(false);
             } catch (error) {
