@@ -32,7 +32,7 @@ async function processResults(results, cookie) {
         results[i].abstract = cleanAbstract(String(results[i].summary));
         results[i].summary = await axios
             .post(
-                process.env.NODE_URL + "summarize",
+                process.env.FASTAPI_URL,
                 {
                     text: results[i].abstract,
                 },
@@ -86,7 +86,7 @@ searchRoute.get("/", verifyToken, async (req, res) => {
                 },
             }
         );
-        res.json(results, search_history);
+        res.status(201).json({ results });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "ArXiv search failed" });
