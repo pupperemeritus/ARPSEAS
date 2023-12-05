@@ -1,6 +1,7 @@
 import "./globals.css";
 import { JetBrains_Mono, Kanit, Roboto } from "next/font/google";
-import { CookiesProvider } from "react-cookie";
+import SessionProvider from "@/components/SessionProvider";
+import Head from "next/head";
 
 const jetBrains_mono = Kanit({
     subsets: ["latin"],
@@ -15,14 +16,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <head>
+            <Head>
                 <meta
                     name="viewport"
                     content="width=device-width, initial-scale=1"
                 />
-            </head>
+            </Head>
             <body className={jetBrains_mono.className}>
-                <CookiesProvider>{children}</CookiesProvider>
+                <SessionProvider>{children}</SessionProvider>
             </body>
         </html>
     );

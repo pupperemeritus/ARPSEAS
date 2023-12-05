@@ -1,13 +1,13 @@
 "use client";
 import React, { Suspense, useContext, useEffect } from "react";
-import Dashboard from "@/components/Dashboard";
 import Header from "@/components/Header";
 import Login from "@/components/Login";
 import Hero from "@/components/Hero";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+
 const loading = () => (
-    <div className="flex justify-center w-min mx-auto text-6xl items-center justify-center gap-4 px-8 py-4 my-40 glass h-min">
+    <div className="flex items-center justify-center gap-4 px-8 py-4 mx-auto my-40 text-6xl w-min glass h-min">
         <h2 className="py-4 text-3xl text-center shimmerb text-bblue-200">
             Loading...
         </h2>
@@ -15,23 +15,29 @@ const loading = () => (
 );
 export default function Home() {
     const router = useRouter();
-
-    useEffect(() => {
-        if (isLoggedIn) {
-            router.push("/user");
-        }
-    }, [isLoggedIn]);
+    const { data: session, status } = useSession();
+    // if (status !== "authenticated") {
+    //     router.push("/");
+    // }
+    // useEffect(() => {
+    //     if (isLoggedIn) {
+    //         router.push("/user");
+    //     }
+    // }, [isLoggedIn]);
 
     return (
         <Suspense fallback={loading()}>
-            <div className="h-screen w-screen">
-                {isLoggedIn ? (
+            <div className="w-screen h-screen spacer layer1">
+                {1 ? (
                     <>
-                        <header className="absolute top-0 left-0 right-0 bg-transparent z-20 p-4 text-white ">
-                            <span className="text-4xl">arpseas</span>
-                            <span className=""></span>
-                        </header>
-                        <Dashboard />
+                        <Header />
+                        {/* <Dashboard /> */}
+                        <div className="flex justify-center w-screen ">
+                            <h1 className="text-5xl text-emerald-300 mt-[20vh]">
+                                {/* Research rabbit hole? We've got the map 🔍 */}
+                                Because research shouldn&apos;t be a chore.
+                            </h1>
+                        </div>
                     </>
                 ) : (
                     <>

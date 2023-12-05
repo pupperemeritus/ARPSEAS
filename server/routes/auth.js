@@ -12,6 +12,7 @@ const secretKey = process.env.SECRET_KEY;
 authRoute.use(express.json());
 authRoute.use(cookieParser());
 authRoute.post("/", async (req, res) => {
+    console.log("auth attempted");
     const { email, password } = req.body;
     // Find the user by email
     const user = await User.findOne({ _id: email });
@@ -23,29 +24,24 @@ authRoute.post("/", async (req, res) => {
     // Create a JWT token
     const token = jwt.sign({ userId: user._id }, secretKey);
 
-    res.cookie("jwt", token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-    });
-
-    res.json({ message: "Logged in successfully" });
+    res.json({ user: user, token: token });
 });
 
 function verifyToken(req, res, next) {
-    const token = req.cookies.jwt;
-    if (!token) {
-        return res.status(401).json({ message: "Unauthorized" });
-    }
+    // const token = req.cookies["next-auth.session-token"];
+    // if (!token) {
+    //     return res.status(401).json({ message: "Unauthorized" });
+    // }
 
-    jwt.verify(token, secretKey, (err, user) => {
-        if (err) {
-            console.log(err);
-            return res.status(403).json({ message: "Forbidden" });
-        }
-        req.user = user;
-        next();
-    });
+    // jwt.verify(token, secretKey, (err, user) => {
+    //     if (err) {
+    //         console.log(err);
+    //         return res.status(403).json({ message: "Forbidden" });
+    //     }
+    //     req.user = user;
+    //     next();
+    // });
+    next();
 }
 
 module.exports = {

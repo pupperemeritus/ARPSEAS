@@ -16,10 +16,10 @@ const app = express();
 
 dotenv.config();
 if (process.env.HTTPS_TRUE == true) {
-    const options = {
-        key: fs.readFileSync(process.env.SSL_KEY),
-        cert: fs.readFileSync(process.env.SSL_CERTIFICATE),
-    };
+    // const options = {
+    //     key: fs.readFileSync(process.env.SSL_KEY),
+    //     cert: fs.readFileSync(process.env.SSL_CERTIFICATE),
+    // };
 }
 
 mongoose
@@ -47,6 +47,7 @@ app.use("/login", authRoute);
 app.use("/search", searchRoute);
 app.use("/item", itemRouter);
 app.use("/group", groupRouter);
+app.use("/searchhistory", searchhistory);
 
 const PORT = process.env.NODE_PORT;
 if (process.env.HTTPS_TRUE == true) {

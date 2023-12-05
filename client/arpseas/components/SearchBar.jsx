@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
-
+import axios from "axios";
 const SearchIcon = () => (
     <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -13,14 +13,25 @@ const SearchIcon = () => (
     </svg>
 );
 
-const SearchBar = () => {
+const SearchBar = (setSearchResult) => {
     const [searchQuery, setSearchQuery] = useState("");
+    const [maxResults, setMaxResults] = useState(5);
+    const [start, setStart] = useState(0);
     const [showOptions, setShowOptions] = useState(false);
     const buttonRef = useRef(null);
 
-    const handleSearch = () => {
+    const handleSearch = async () => {
         // Add your search logic here
         console.log("Searching for:", searchQuery);
+        const searchRes = await axios.get(
+            process.env.NEXT_PUBLIC_api_url + "search",
+            {
+                query: searchQuery,
+                maxResults: maxResults,
+                start: start,
+            }
+        );
+        setSearchResult(searchRes.data);
     };
 
     const handleToggleOptions = () => {
@@ -44,40 +55,62 @@ const SearchBar = () => {
 
     return (
         <>
-            <div className="flex justify-center items-center">
-                <div className="relative">
-                    <input
-                        type="text"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className=" my-6 pl-8 pr-3  py-2 rounded-full text-sm font-medium bg-gray-300 text-gray-700 w-96" // Adjust the width here
-                    />
-                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <SearchIcon />
+            <div className="flex flex-col ">
+                <div className="flex items-center justify-center">
+                    <div className="relative">
+                        <input
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="py-2 pl-8 pr-3 my-6 text-sm font-medium text-gray-700 bg-gray-300 rounded-full w-96" // Adjust the width here
+                        />
+                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <SearchIcon />
+                        </div>
+                    </div>
+                    <button
+                        ref={buttonRef}
+                        onClick={handleSearch}
+                        className="px-4 py-2 ml-2 font-medium text-gray-700 bg-gray-300 rounded-full">
+                        Search
+                    </button>
+                </div>
+                <div className="flex items-center justify-start gap-16 ">
+                    <div>
+                        <span className="text-gray-300 ">Max Results: </span>
+                        <input
+                            type="number"
+                            value={maxResults}
+                            onChange={(e) => setMaxResults(e.target.value)}
+                            className="w-20 py-2 pl-8 pr-3 text-sm font-medium text-gray-700 bg-gray-300 rounded-full" // Adjust the width here
+                        />
+                    </div>
+                    <div>
+                        <span className="text-gray-300 ">Start: </span>
+                        <input
+                            type="number"
+                            value={start}
+                            onChange={(e) => setStart(e.target.value)}
+                            className="w-20 py-2 pl-8 pr-3 text-sm font-medium text-gray-700 bg-gray-300 rounded-full" // Adjust the width here
+                        />
                     </div>
                 </div>
-                <button
-                    ref={buttonRef}
-                    onClick={handleToggleOptions}
-                    className="ml-2 px-4 py-2 rounded-full bg-gray-300 text-gray-700 font-medium">
-                    Options
-                </button>
             </div>
-            {showOptions && (
+            {/* {showOptions && (
                 <div
                     className="absolute mt-2 border rounded-md shadow-md"
                     style={{ width: buttonRef.current.offsetWidth }}>
-                    <ul className="list-none p-0">
+                    <ul className="p-0 list-none">
                         {options.map((option) => (
                             <li
                                 key={option}
-                                className="py-2 px-4 hover:bg-gray-100 cursor-pointer">
+                                className="px-4 py-2 cursor-pointer hover:bg-gray-100">
                                 {option}
                             </li>
                         ))}
                     </ul>
                 </div>
-            )}
+            )} */}
         </>
     );
 };

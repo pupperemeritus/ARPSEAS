@@ -1,16 +1,24 @@
+"use client";
 import React from "react";
 import Dashboard from "@/components/Dashboard";
 import Header from "@/components/Header";
-const Dashboardcomp = () => {
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
+const Dashboardcomp = () => {
+    const { data: session, status } = useSession();
+    const router = useRouter();
+    if (status !== "authenticated") {
+        console.log(status);
+        router.push("/");
+    }
     return (
- <div className="h-screen w-screen">
-{/* <header className=" bg-gray-800 p-4 text-white ">
-       <span className="text-4xl">arpseas</span> 
-    </header> */}
-    <Header/>
-            <Dashboard/>
+        <div className="h-screen w-screen">
+            <div>
+                <Header />
+                <Dashboard />
+            </div>
         </div>
-    )
-}
-export default Dashboardcomp
+    );
+};
+export default Dashboardcomp;

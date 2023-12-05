@@ -1,20 +1,25 @@
 import React from "react";
 
 const SearchResult = ({ data }) => {
+    if (!data || !Array.isArray(data)) {
+        return null; // or handle the case when data is not available
+    }
     return (
         <div>
             {data.map((item) => (
                 <div
                     key={item.id[0]}
-                    className="mb-4">
-                    <h2 className="text-xl font-semibold">{item.title[0]}</h2>
-                    <p className="text-gray-600 mb-2">
+                    className="px-8 py-4 mb-4 shadow-lg bg-[#444444] rounded-xl ">
+                    <h2 className="mb-2 text-xl font-semibold text-emerald-300">
+                        {item.title[0]}
+                    </h2>
+                    <p className="mb-2 text-gray-400 ">
                         Published: {item.published[0]}
                     </p>
-                    <p className="text-gray-600 mb-2">
+                    <p className="mb-2 text-gray-400">
                         Author: {item.author[0].name[0]}
                     </p>
-                    <p className="text-gray-800">{item.abstract}</p>
+                    <p className="text-gray-200">{item.abstract}</p>
                     <div className="mt-2">
                         <a
                             href={
